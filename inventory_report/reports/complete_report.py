@@ -1,2 +1,4 @@
 class CompleteReport:
-    pass
+    @staticmethod
+    def generate():
+        pass
