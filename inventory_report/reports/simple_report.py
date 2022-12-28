@@ -47,7 +47,7 @@ class SimpleReport:
         return Counter(dict_isolated_key).most_common()
 
     @staticmethod
-    def generate(products_data):
+    def generate_simple_report(products_data):
         date_today = str(date.today())
 
         manufacturing_dates = SimpleReport.extract_orderly_dict_key(
@@ -71,3 +71,7 @@ class SimpleReport:
             f"Data de validade mais próxima: {validity_dates[0]}\n"
             f"Empresa com mais produtos: {most_common_company[0][0]}"
             )
+
+    @staticmethod
+    def generate(products_data):
+        return SimpleReport.generate_simple_report(products_data)
