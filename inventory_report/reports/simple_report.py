@@ -4,43 +4,43 @@ from collections import Counter
 
 class SimpleReport:
     @staticmethod
-    def extract_orderly_dict_key(
+    def extract_dict_values_by_key(
         dict_data,
         request_key,
         min_value=False,
         max_value=False
     ):
         if min_value and max_value:
-            return sorted([
+            return [
                 product[request_key]
                 for product in dict_data
                 if product[request_key] >= min_value
                 and product[request_key] <= max_value
-                ])
+                ]
 
         elif min_value:
-            return sorted([
+            return [
                 product[request_key]
                 for product in dict_data
                 if product[request_key] >= min_value
-                ])
+                ]
 
         elif max_value:
-            return sorted([
+            return [
                 product[request_key]
                 for product in dict_data
                 if product[request_key] <= max_value
-                ])
+                ]
 
         else:
-            return sorted([
+            return [
                       product[request_key]
                       for product in dict_data
-                      ])
+                      ]
 
     @staticmethod
-    def count_and_order_dict_by_key(dict_data, dict_key):
-        dict_isolated_key = SimpleReport.extract_orderly_dict_key(
+    def count_and_order_dict_by_common(dict_data, dict_key):
+        dict_isolated_key = SimpleReport.extract_dict_values_by_key(
           dict_data,
           dict_key
         )
@@ -50,21 +50,24 @@ class SimpleReport:
     def generate_simple_report(products_data):
         date_today = str(date.today())
 
-        manufacturing_dates = SimpleReport.extract_orderly_dict_key(
+        manufacturing_dates = SimpleReport.extract_dict_values_by_key(
           products_data,
           "data_de_fabricacao"
         )
 
-        validity_dates = SimpleReport.extract_orderly_dict_key(
+        validity_dates = SimpleReport.extract_dict_values_by_key(
           products_data,
           "data_de_validade",
           date_today
         )
 
-        most_common_company = SimpleReport.count_and_order_dict_by_key(
+        most_common_company = SimpleReport.count_and_order_dict_by_common(
           products_data,
           "nome_da_empresa"
         )
+
+        manufacturing_dates.sort()
+        validity_dates.sort()
 
         return (
             f"Data de fabricação mais antiga: {manufacturing_dates[0]}\n"
