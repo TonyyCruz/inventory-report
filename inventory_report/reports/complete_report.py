@@ -2,10 +2,10 @@ from .simple_report import SimpleReport
 
 
 class CompleteReport(SimpleReport):
-    @staticmethod
-    def stock_by_companies(products_data):
+    @classmethod
+    def stock_by_companies(cls, products_data):
 
-        companies_and_stock = CompleteReport.count_and_order_dict_by_common(
+        companies_and_stock = cls.count_and_order_dict_by_common(
             products_data,
             "nome_da_empresa"
         )
@@ -15,9 +15,10 @@ class CompleteReport(SimpleReport):
             stocked_products_by_company += f"- {company}: {stock}\n"
         return stocked_products_by_company
 
-    def generate(products_data):
-        simple_report = CompleteReport.generate_simple_report(products_data)
-        companies_and_stock = CompleteReport.stock_by_companies(products_data)
+    @classmethod
+    def generate(cls, products_data):
+        simple_report = cls.generate_simple_report(products_data)
+        companies_and_stock = cls.stock_by_companies(products_data)
 
         return (
             f"{simple_report}\n"
