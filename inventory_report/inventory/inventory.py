@@ -1,23 +1,19 @@
 from inventory_report.reports.simple_report import SimpleReport
 from inventory_report.reports.complete_report import CompleteReport
-from csv import DictReader
-import xmltodict
-import json
+from ..importer.csv_importer import CsvImporter
+from ..importer.xml_importer import XmlImporter
+from ..importer.json_importer import JsonImporter
 
 
 class Inventory:
     @classmethod
     def read_file(cls, path):
-        file_data = ""
-        with open(path, 'r') as file:
-            if path.endswith(".csv"):
-                file_data = list(DictReader(file))
-            elif path.endswith(".xml"):
-                dict_file = xmltodict.parse(file.read())
-                file_data = dict_file["dataset"]["record"]
-            elif path.endswith(".json"):
-                file_data = json.load(file)
-        return file_data
+        if path.endswith(".csv"):
+            return CsvImporter.import_data(path)
+        elif path.endswith(".xml"):
+            return XmlImporter.import_data(path)
+        elif path.endswith(".json"):
+            return JsonImporter.import_data(path)
 
     @classmethod
     def import_data(cls, path, report_type):
