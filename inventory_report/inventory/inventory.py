@@ -14,6 +14,9 @@ class Inventory:
             return XmlImporter.import_data(path)
         elif path.endswith(".json"):
             return JsonImporter.import_data(path)
+        else:
+            print('A extensão do arquivo deve ser ".csv", ".json" ou ".xml"')
+            raise ValueError("Arquivo inválido")
 
     @classmethod
     def import_data(cls, path, report_type):
@@ -24,4 +27,5 @@ class Inventory:
         elif report_type.lower() == "completo":
             return CompleteReport.generate(list_of_products_in_dict)
         else:
-            return "Invalid Report Type"
+            print(f'{report_type} deve ser "simples" ou "completo"')
+            raise ValueError("Invalid Report Type")

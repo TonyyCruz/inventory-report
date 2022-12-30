@@ -8,5 +8,14 @@ class CsvImporter(Importer):
         if not path.endswith(".csv"):
             raise ValueError("Arquivo inválido")
 
-        with open(path, 'r') as file:
-            return list(DictReader(file))
+        try:
+            with open(path, 'r') as file:
+                return list(DictReader(file))
+
+        except FileExistsError:
+            print(f'"{path}" não existe')
+            raise FileExistsError(f'"{path}" não existe')
+
+        except FileNotFoundError:
+            print(f'"{path}" não foi encontrado')
+            raise FileNotFoundError(f'"{path}" não foi encontrado')
