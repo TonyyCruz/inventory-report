@@ -18,7 +18,6 @@ class Product:
         self.instrucoes_de_armazenamento = instrucoes_de_armazenamento
 
     def __repr__(self):
-        print("repr chamado <><><><><<>")
         return (
             f"O produto {self.nome_do_produto}"
             f" fabricado em {self.data_de_fabricacao}"
