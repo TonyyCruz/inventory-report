@@ -9,15 +9,18 @@ def main():
     if len(sys.argv) < 3:
         return print("Verifique os argumentos", file=sys.stderr)
 
-    if sys.argv[1].endswith(".csv"):
+    file_path = sys.argv[1]
+    report_type = sys.argv[2]
+
+    if file_path.endswith(".csv"):
         importer = CsvImporter
-    elif sys.argv[1].endswith(".xml"):
+    elif file_path.endswith(".xml"):
         importer = XmlImporter
-    elif sys.argv[1].endswith(".json"):
+    elif file_path.endswith(".json"):
         importer = JsonImporter
     else:
         print('A extensão do arquivo deve ser ".csv", ".json" ou ".xml"')
         raise ValueError("Arquivo inválido")
 
     inventory_report = InventoryRefactor(importer)
-    print(inventory_report.import_data(sys.argv[1], sys.argv[2]), end="")
+    print(inventory_report.import_data(file_path, report_type), end="")
